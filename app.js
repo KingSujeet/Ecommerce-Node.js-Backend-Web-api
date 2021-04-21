@@ -2,6 +2,15 @@ const { json } = require('express')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const fs = require('fs')
+const morgan = require('morgan')
+const path = require('path')
+
+// create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+ 
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
 
 //middleware
 app.use(bodyParser.json())

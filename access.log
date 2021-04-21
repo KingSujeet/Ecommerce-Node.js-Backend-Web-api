@@ -1,0 +1,2 @@
+::1 - - [21/Apr/2021:09:43:42 +0000] "GET /api/v1/product HTTP/1.1" 200 50 "-" "PostmanRuntime/7.26.8"
+::ffff:127.0.0.1 - - [21/Apr/2021:09:45:06 +0000] "GET /api/v1/product HTTP/1.1" 200 50 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"

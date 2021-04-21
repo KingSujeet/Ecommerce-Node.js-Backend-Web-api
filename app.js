@@ -1,5 +1,6 @@
 const { json } = require('express')
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 const bodyParser = require('body-parser')
 const fs = require('fs')
@@ -16,26 +17,27 @@ app.use(morgan('combined', { stream: accessLogStream }))
 app.use(bodyParser.json())
 
 require('dotenv/config')
+const productsRouter = require('./routers/products')
+const categoriesRouter = require('./routers/categories')
+const ordersRouter = require('./routers/orders')
+const usersRouter = require('./routers/users')
 
 const api = process.env.API_URL
 
-app.get(`${api}/product`, (req, res) =>{
+app.use(`${api}/product`,productsRouter)
+app.use(`${api}/category`,categoriesRouter)
+app.use(`${api}/order`,ordersRouter)
+app.use(`${api}/user`,usersRouter)
 
-    const product = {
-        id : 1,
-        name: "Sujeet Thakur",
-        image: 'Some_url',
-    }
-
-    res.send(product)
+mongoose.connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
-
-app.post(`${api}/product`, (req, res) =>{
-
-   const newProduct = req.body
-
-    res.send(newProduct)
-
+.then(()=>{
+    console.log('mongodb db connected....')
+})
+.catch((err)=>{
+    console.log(err)
 })
 
 app.listen(3000, ()=>{
